@@ -25,7 +25,7 @@ public class User implements Serializable {
     @Column(nullable = false, unique = true)
     private String nickName;
 
-    public User( String userName, String password, String email, String nickName) {
+    public User(String name, String userName, String password, String email, String nickName) {
         this.userName = userName;
         this.password = password;
         this.email = email;
@@ -70,5 +70,16 @@ public class User implements Serializable {
 
     public void setNickName(String nickName) {
         this.nickName = nickName;
+    }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "id=" + id +
+                ", userName='" + userName + '\'' +
+                ", password='" + password + '\'' +
+                ", email='" + email + '\'' +
+                ", nickName='" + nickName + '\'' +
+                '}';
     }
 }
