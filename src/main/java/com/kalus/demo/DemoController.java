@@ -15,6 +15,8 @@ import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpSession;
+import java.util.UUID;
 import java.util.concurrent.TimeUnit;
 
 @RestController
@@ -91,5 +93,17 @@ public class DemoController {
     @ResponseBody
     public String test2(@RequestParam(value = "userName") String userName) {
         return "Hello," + userName + ",it's a Shit-Company";
+    }
+
+    @RequestMapping("/uid")
+    public String uid(HttpSession httpSession) {
+
+        UUID uuid = (UUID) httpSession.getAttribute("uid");
+        if (uuid == null) {
+            uuid = UUID.randomUUID();
+        }
+        httpSession.setAttribute("uid", uuid);
+        return httpSession.getId();
+
     }
 }
