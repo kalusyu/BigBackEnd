@@ -12,6 +12,8 @@ import org.springframework.core.SpringVersion;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.data.redis.core.ValueOperations;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
@@ -19,7 +21,7 @@ import javax.servlet.http.HttpSession;
 import java.util.UUID;
 import java.util.concurrent.TimeUnit;
 
-@RestController
+@Controller
 //表示该controller类下所有的方法都公用的一级上下文根
 @RequestMapping(value = "shit")
 public class DemoController {
@@ -43,7 +45,6 @@ public class DemoController {
 
     @Autowired
     private RedisTemplate redisTemplate;
-
     // 使用了属性name = "" 导致无法访问
     @RequestMapping(value = "hello")
     @ResponseBody
@@ -95,6 +96,7 @@ public class DemoController {
         return "Hello," + userName + ",it's a Shit-Company";
     }
 
+    @ResponseBody
     @RequestMapping("/uid")
     public String uid(HttpSession httpSession) {
 
@@ -105,5 +107,17 @@ public class DemoController {
         httpSession.setAttribute("uid", uuid);
         return httpSession.getId();
 
+    }
+
+
+    /**
+     * 不需要 @ResponseBody
+     * @param modelMap
+     * @return
+     */
+    @RequestMapping("/switch")
+    public String switchcase(ModelMap modelMap) {
+        modelMap.addAttribute("sex","woman");
+        return "switch";
     }
 }
